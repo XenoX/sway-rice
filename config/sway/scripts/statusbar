@@ -24,4 +24,4 @@ swaymsg -rt get_outputs | jq --arg base "$BASE" '
 	+ [$vertical[] | {include: [$base], output: ., "modules-center": []}]
 ' > "$CONFIG" || CONFIG="$BASE"
 
-exec waybar --bar main-bar --log-level debug --config "${CONFIG}" --style "${STYLE}"
+exec waybar --bar main-bar --log-level error --config "${CONFIG}" --style "${STYLE}"
