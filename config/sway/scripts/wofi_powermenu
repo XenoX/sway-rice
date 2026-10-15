@@ -6,7 +6,9 @@
 
 ## Files
 CONFIG="$HOME/.config/sway/wofi/config"
-STYLE="$HOME/.config/sway/wofi/style.css"
+## wofi loads the style as raw data, so `@import "colors.css"` would resolve from the cwd: inline it
+STYLE="${XDG_RUNTIME_DIR:-/tmp}/wofi-style.css"
+cat "$HOME/.config/sway/wofi/colors.css" <(grep -v '^@import' "$HOME/.config/sway/wofi/style.css") > "$STYLE"
 
 ## Wofi Command
 wofi_command="wofi --show dmenu \

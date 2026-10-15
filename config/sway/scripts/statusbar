@@ -1,16 +1,27 @@
 #!/usr/bin/env bash
 
-EXTERNAL_MAIN_MONITOR="DP-1"
-EXTERNAL_SECOND_MONITOR="HDMI-A-1"
+## One waybar on every output, without the music module (center) on vertical screens.
+## External screens change connector name at each plug (DP-3, DP-5...), so instead of
+## config_multiple (fixed names) the bars are generated from the active outputs.
+## shortcut: generated at launch only ; after plugging a screen, reload sway ($mod+Shift+c).
 
-if swaymsg -t get_outputs | jq -e --arg a "$EXTERNAL_MAIN_MONITOR" --arg b "$EXTERNAL_SECOND_MONITOR" 'any(.[]; .name == $a or .name == $b)' >/dev/null; then
-	CONFIG="$HOME/.config/sway/waybar/config_multiple"
-else
-	CONFIG="$HOME/.config/sway/waybar/config"
-fi
-
+BASE="$HOME/.config/sway/waybar/config"
 STYLE="$HOME/.config/sway/waybar/style.css"
+CONFIG="${XDG_RUNTIME_DIR:-/tmp}/waybar-config.json"
 
-if [[ ! $(pidof waybar) ]]; then
-	waybar --bar main-bar --log-level error --config "${CONFIG}" --style "${STYLE}"
-fi
+# Two quick `swaymsg reload` used to start two waybars : the lock is held by
+# waybar itself (exec), so a second launcher exits while one is running
+exec 9>"${XDG_RUNTIME_DIR:-/tmp}/sway-statusbar.lock"
+flock -n 9 || exit 0
+
+pidof waybar >/dev/null && exit 0
+
+# include : the generating file's keys win over the base config
+swaymsg -rt get_outputs | jq --arg base "$BASE" '
+	[.[] | select(.active and (.transform == "90" or .transform == "270")) | .name] as $vertical
+	# no "output" key = every output (a bare "*" string matches nothing in waybar)
+	| [{include: [$base]} + (if $vertical == [] then {} else {output: [($vertical[] | "!" + .), "*"]} end)]
+	+ [$vertical[] | {include: [$base], output: ., "modules-center": []}]
+' > "$CONFIG" || CONFIG="$BASE"
+
+exec waybar --bar main-bar --log-level debug --config "${CONFIG}" --style "${STYLE}"

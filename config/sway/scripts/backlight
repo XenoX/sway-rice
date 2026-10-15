@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-## Portable backlight control : uses `light` when available, else `brightnessctl`.
+## Portable backlight control : uses `light` when available, else `brightnessctl`, else sysfs + logind.
 ## Usage: backlight get | set <pct> | inc <pct> | dec <pct>
 
 cmd="$1"; val="${2:-5}"
@@ -19,6 +19,19 @@ elif command -v brightnessctl >/dev/null 2>&1; then
 		inc) brightnessctl -q set "+${val}%" ;;
 		dec) brightnessctl -q set "${val}%-" ;;
 	esac
+elif dev="$(ls -d /sys/class/backlight/* 2>/dev/null | head -1)" && [[ -n "$dev" ]]; then
+	# no tool installed : read sysfs, write through logind (no root needed)
+	max=$(<"$dev/max_brightness"); cur=$(( $(<"$dev/brightness") * 100 / max ))
+	case "$cmd" in
+		get) echo "$cur"; exit ;;
+		set) pct=$val ;;
+		inc) pct=$(( cur + val )) ;;
+		dec) pct=$(( cur - val )) ;;
+		*)   exit 1 ;;
+	esac
+	(( pct < 1 )) && pct=1; (( pct > 100 )) && pct=100
+	busctl call org.freedesktop.login1 /org/freedesktop/login1/session/auto \
+		org.freedesktop.login1.Session SetBrightness ssu backlight "${dev##*/}" $(( pct * max / 100 ))
 else
 	echo "backlight: install light or brightnessctl" >&2
 	exit 1

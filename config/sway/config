@@ -10,6 +10,9 @@ set $alt Mod1
 font pango:JetBrains Mono Medium 10
 
 ##-- Config files ------------------------
+##~ Distro defaults first, so our own config can override them (Ubuntu's 40-sway-background.conf sets `output * bg`)
+include /etc/sway/config.d/*
+
 include ~/.config/sway/sway-idle
 include ~/.config/sway/sway-input
 include ~/.config/sway/sway-output
@@ -40,7 +43,7 @@ set $lockscreen ~/.config/sway/scripts/current_lock
 set $wlogout ~/.config/sway/scripts/wlogout
 set $colorpicker ~/.config/sway/scripts/colorpicker
 set $playerctl playerctl --player=tidal,%any
-set $files thunar
+set $files nautilus
 set $editor vscodium
 set $browser chromium
 
@@ -99,6 +102,7 @@ bindsym Print                   exec "$screenshot --now"
 bindsym $alt+Print              exec "$screenshot --in5"
 bindsym Shift+Print             exec "$screenshot --in10"
 bindsym Control+Print           exec "$screenshot --win"
+bindsym Control+F9              exec flameshot gui
 bindsym $mod+Shift+A            exec "$screenshot --area"
 
 # -- Lockscreen --
@@ -298,5 +302,7 @@ for_window [app_id="viewnior|gimp"] floating enable
 for_window [class="Yad|feh|Gpicview|MPlayer"] floating enable
 for_window [class="VirtualBox Manager|qemu|Qemu-system-x86_64"] floating enable
 
-##-- Misc --------------------------------
-include /etc/sway/config.d/*
+##-- Workspaces assignment ---------------
+assign [app_id="firefox"] → workspace number 1
+assign [app_id="vesktop"] → workspace number 4
+assign [app_id="slack"] → workspace number 4
