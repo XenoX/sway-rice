@@ -1,4 +1,6 @@
 {
+	// right-side modules : no tooltips (they would cover the quickshell panels), except battery
+
 	// waybar-backlight
     "backlight": {
             "format": "{icon}",
@@ -7,7 +9,7 @@
                 "󰃟",
                 "󰃠"
             ],
-            "tooltip-format": "Luminosité {percent}%",
+            "tooltip": false,
             "on-click": "$HOME/.config/sway/scripts/panel brightness",
             "on-scroll-up": "$HOME/.config/sway/scripts/backlight inc 5",
             "on-scroll-down": "$HOME/.config/sway/scripts/backlight dec 5",
@@ -40,7 +42,7 @@
                 "󰂂",
                 "󰁹"
             ],
-            "tooltip-format": "Batterie {capacity}% · {timeTo}",
+            "tooltip-format": "Battery {capacity}% · {timeTo}",
             "tooltip": true
         },
 
@@ -52,10 +54,7 @@
             "format-disabled": "󰂲",
             "format-connected": "󰂱",
             "format-connected-battery": "󰂱",
-            "tooltip-format": "Bluetooth : {status}",
-            "tooltip-format-connected": "{device_enumerate}",
-            "tooltip-format-enumerate-connected": "{device_alias}",
-            "tooltip-format-enumerate-connected-battery": "{device_alias} · {device_battery_percentage}%",
+            "tooltip": false,
             "on-click": "$HOME/.config/sway/scripts/panel bluetooth"
         },
 
@@ -63,8 +62,8 @@
     "clock": {
             "interval": 60,
             "format": "󰥔 {:%H:%M}",
-            "tooltip-format": "{:%A %d %B %Y}",
-            "locale": "fr_FR.UTF-8",
+            "tooltip": false,
+            "locale": "C",
             "on-click": "$HOME/.config/sway/scripts/panel calendar"
         },
 
@@ -78,16 +77,17 @@
          "timeout": 30
     },
 
-	// neo brutalism light/dark switch
+	// neo brutalism theme : click opens the quickshell theme panel (mode + main color)
     "custom/theme": {
         "exec": "$HOME/.config/sway/waybar/themeswitch",
         "return-type": "json",
         "interval": "once",
         "signal": 8,
         "format": "{}",
-        "tooltip": true,
+        "tooltip": false,
         "escape": false,
-        "on-click": "$HOME/.config/sway/theme/neobrutal.sh toggle && pkill -RTMIN+8 -x waybar",
+        "on-click": "$HOME/.config/sway/scripts/panel theme",
+        "on-click-right": "$HOME/.config/sway/theme/neobrutal.sh toggle",
     },
 
 	// waybar-spotify
@@ -135,9 +135,7 @@
             "format-linked": "󰈀",
             "format-disconnected": "󰤮",
             "format-disabled": "󰤭",
-            "tooltip-format-wifi": "{essid} · {signalStrength}%",
-            "tooltip-format-ethernet": "{ifname} · {ipaddr}/{cidr}",
-            "tooltip-format-disconnected": "Déconnecté",
+            "tooltip": false,
             "on-click": "$HOME/.config/sway/scripts/panel wifi"
         },
 
@@ -156,7 +154,7 @@
                     "󰕾"
                 ]
             },
-            "tooltip-format": "{desc} · {volume}%",
+            "tooltip": false,
             "scroll-step": 5.0,
             "on-click": "$HOME/.config/sway/scripts/panel audio",
             "on-click-right": "pulsemixer --toggle-mute",
