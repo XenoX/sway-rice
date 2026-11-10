@@ -4,7 +4,8 @@
 
 DIR="$HOME/.config/sway"
 MODE="$("$DIR"/theme/neobrutal.sh status)"
-source "$DIR/theme/neobrutal/$MODE.bash"
+THEME="$("$DIR"/theme/neobrutal.sh theme)"
+source "$DIR/theme/$THEME/$MODE.bash"
 
 SUN=$'\U000F05A8'   # nf-md-white_balance_sunny
 MOON=$'\U000F0594'  # nf-md-weather_night

@@ -139,7 +139,7 @@ Card {
                     height: 50
                     text: "PAIR"
                     font.pixelSize: 10
-                    font.weight: Font.Black
+                    font.weight: Theme.heavy
                 }
             }
         }

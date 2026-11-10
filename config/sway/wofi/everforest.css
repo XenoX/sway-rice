@@ -1,0 +1,28 @@
+/** ********** Everforest : overrides style.css (copied to shape.css by theme/neobrutal.sh) ********** **/
+
+* {
+	font-weight: 600;
+	border-radius: 8px;
+}
+
+#window {
+	border: 2px solid @border;
+	border-radius: 12px;
+}
+
+#input,
+#input:focus {
+	border: 1px solid @border;
+	box-shadow: none;
+}
+
+#input:focus {
+	background-color: @surface;
+	color: @fg;
+	border-color: @main;
+}
+
+#entry:selected {
+	border: none;
+	box-shadow: none;
+}

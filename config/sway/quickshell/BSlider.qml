@@ -29,6 +29,7 @@ Item {
         y: Theme.pressOff
         width: track.width
         height: track.height
+        radius: Theme.radius
         color: Theme.shadow
     }
 
@@ -37,6 +38,7 @@ Item {
         width: parent.width - Theme.pressOff
         height: parent.height - Theme.pressOff
         color: Theme.surface
+        radius: Theme.radius
         border.width: Theme.bwSmall
         border.color: Theme.border
         clip: true
@@ -47,6 +49,7 @@ Item {
             height: parent.height - 2 * Theme.bwSmall
             width: Math.max(0, (parent.width - 2 * Theme.bwSmall) * Math.min(1, sl.value))
             color: sl.muted ? Theme.muted : sl.fill
+            radius: Theme.inner(Theme.bwSmall)
             Behavior on width { NumberAnimation { duration: 80 } }
 
             // hard edge between filled / empty part

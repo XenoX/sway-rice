@@ -16,6 +16,7 @@ Item {
         y: Theme.pressOff
         width: parent.width - Theme.pressOff
         height: parent.height - Theme.pressOff
+        radius: Theme.radius
         color: Theme.shadow
     }
 
@@ -24,6 +25,7 @@ Item {
         width: parent.width - Theme.pressOff
         height: parent.height - Theme.pressOff
         color: sw.checked ? Theme.green : Theme.surface
+        radius: Theme.radius
         border.width: Theme.bwSmall
         border.color: Theme.border
 
@@ -34,6 +36,7 @@ Item {
             y: 5
             x: sw.checked ? track.width - width - 5 : 5
             color: Theme.dark && !sw.checked ? Theme.fg : Theme.border
+            radius: Theme.radius ? height / 2 : 0
             opacity: sw.busy ? 0.4 : 1
             Behavior on x { NumberAnimation { duration: 120; easing.type: Easing.OutCubic } }
         }

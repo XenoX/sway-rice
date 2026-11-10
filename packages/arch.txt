@@ -77,3 +77,7 @@ git
 curl
 unzip
 base-devel
+
+# --- Everforest GTK theme build (theme/neobrutal.sh everforest) ---
+sassc
+gtk-engine-murrine

@@ -19,6 +19,7 @@ Item {
         height: 40
         anchors.verticalCenter: parent.verticalCenter
         color: hdr.tint
+        radius: Theme.radius
         border.width: Theme.bwSmall
         border.color: Theme.border
 
@@ -42,7 +43,7 @@ Item {
             width: parent.width
             text: hdr.title.toUpperCase()
             font.pixelSize: 17
-            font.weight: Font.Black
+            font.weight: Theme.heavy
         }
         BText {
             width: parent.width

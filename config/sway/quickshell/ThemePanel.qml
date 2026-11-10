@@ -1,7 +1,7 @@
 import QtQuick
 import Quickshell
 
-// Light/dark mode + main color (sway borders, bar, menus, cursor, login screen)
+// Theme (neobrutal | everforest) + light/dark mode + main color (sway borders, bar, menus, cursor, login screen)
 Card {
     id: panel
 
@@ -13,10 +13,14 @@ Card {
     })
 
     // what was just clicked, until colors.json catches up (the switch takes ~1s)
+    property string pendingTheme: ""
     property string pendingMode: ""
     property string pendingAccent: ""
     property int pendingSize: 0
     property int pendingZoom: 0
+    readonly property var themes: Theme.c.themes ?? ["neobrutal", "everforest"]
+    readonly property var themeLabels: ({ neobrutal: "Neo Brutal", everforest: "Everforest" })
+    readonly property string themeName: pendingTheme !== "" ? pendingTheme : (Theme.c.theme ?? "neobrutal")
     readonly property bool dark: pendingMode !== "" ? pendingMode === "dark" : Theme.dark
     readonly property string accentName: pendingAccent !== "" ? pendingAccent : (Theme.c.accent_name ?? "yellow")
     readonly property var cursorSizes: Theme.c.cursor_sizes ?? [24, 32, 48, 72]
@@ -27,11 +31,18 @@ Card {
     Connections {
         target: Theme
         function onCChanged() {
+            panel.pendingTheme = "";
             panel.pendingMode = "";
             panel.pendingAccent = "";
             panel.pendingSize = 0;
             panel.pendingZoom = 0;
         }
+    }
+
+    function setTheme(name) {
+        if (name === panel.themeName) return;
+        panel.pendingTheme = name;
+        Quickshell.execDetached([panel.ctl, "theme", name]);
     }
 
     function setMode(mode) {
@@ -63,6 +74,27 @@ Card {
         title: "Theme"
         tint: Theme.main
         subtitle: "Colors, cursor, zoom"
+    }
+
+    SectionLabel { text: "Theme" }
+
+    Row {
+        id: themeRow
+        width: parent.width
+        spacing: 8
+
+        Repeater {
+            model: panel.themes
+
+            BButton {
+                required property string modelData
+                width: (themeRow.width - (panel.themes.length - 1) * themeRow.spacing) / panel.themes.length
+                icon: modelData === "everforest" ? "󰐅" : "󰝤"
+                text: panel.themeLabels[modelData] ?? modelData
+                active: modelData === panel.themeName
+                onClicked: panel.setTheme(modelData)
+            }
+        }
     }
 
     SectionLabel { text: "Mode" }
@@ -161,6 +193,7 @@ Card {
         }
     }
 
+    // (square : sway windows have no rounded corners)
     // mini preview : a focused window with the chosen border and title bar
     Item {
         width: parent.width
@@ -200,7 +233,7 @@ Card {
                     text: "~: alacritty"
                     color: Theme.ink
                     font.pixelSize: 12
-                    font.weight: Font.ExtraBold
+                    font.weight: Theme.heavy
                 }
             }
 

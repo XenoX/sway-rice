@@ -4,7 +4,7 @@ import Quickshell
 import Quickshell.Io
 import QtQuick
 
-// Neo Brutalism palette, live-reloaded from colors.json (written by theme/neobrutal.sh)
+// Theme palette + shapes (neobrutal | everforest), live-reloaded from colors.json (written by theme/neobrutal.sh)
 Singleton {
     id: theme
 
@@ -30,10 +30,15 @@ Singleton {
     readonly property color pink: c.pink ?? "#FF90E8"
 
     readonly property string font: "JetBrainsMono Nerd Font"
-    readonly property int bw: 3          // card border
-    readonly property int bwSmall: 2     // control border
-    readonly property int shadowOff: 6   // card shadow offset
-    readonly property int pressOff: 3    // control shadow offset
+    // shapes : from the palette (neobrutal : thick borders + hard shadows, everforest : thin + rounded)
+    readonly property int bw: c.bw ?? 3                 // card border
+    readonly property int bwSmall: c.bw_small ?? 2      // control border
+    readonly property int shadowOff: c.shadow_off ?? 6  // card shadow offset
+    readonly property int pressOff: c.press_off ?? 3    // control shadow offset
+    readonly property int radius: c.radius ?? 0         // corner radius (cards, controls)
+    readonly property int heavy: c.weight ?? Font.ExtraBold   // titles / chips weight
+    // radius of a shape inset by d px in a rounded one
+    function inner(d) { return Math.max(0, radius - d); }
 
     // text color to use on top of a given fill
     function onFill(fill) {

@@ -153,6 +153,7 @@ Card {
                                 width: parent.width - okBtn.width - 8
                                 height: 32
                                 color: Theme.bg
+                                radius: Theme.radius
                                 border.width: Theme.bwSmall
                                 border.color: Theme.border
 

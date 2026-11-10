@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 
-## Neo Brutalism swaylock (used by scripts/current_lock when hyprlock isn't installed)
+## Neo Brutalism / Everforest swaylock (used by scripts/current_lock when hyprlock isn't installed)
 ##
 ## swaylock can only draw its ring, so the rest is a background rendered at lock
-## time, one per output : the dot grid wallpaper + a card (black border, hard
-## shadow, LOCKED title bar) with the ring sitting in it.
+## time, one per output. Neobrutal : the dot grid wallpaper + a card (black border,
+## hard shadow, LOCKED title bar) with the ring sitting in it. Everforest : the
+## blurred wallpaper photo + a translucent rounded card (render_everforest).
 ## Colors come from quickshell/colors.json (theme/neobrutal.sh), so the main
 ## color picked in the theme panel applies here too.
 
@@ -24,7 +25,7 @@ blue="$(c blue '#88AAEE')"; orange="$(c orange '#FF9F45')"
 
 im="magick"; command -v magick >/dev/null 2>&1 || im="convert"
 font="$(fc-match -f '%{file}' 'JetBrainsMono Nerd Font:bold' 2>/dev/null)"
-wall="$DIR/wallpapers/neobrutal-$mode.png"
+wall="$DIR/wallpapers/$(c theme neobrutal)-$mode.png"
 since="$(LC_ALL=C date '+%H:%M')"
 
 # ring geometry (logical px, swaylock scales it with the output)
@@ -68,10 +69,61 @@ render() {   # render <out.png> <width px> <height px> <scale>
 		"$out"
 }
 
+# Everforest : the wallpaper photo cropped to the output and blurred, a translucent
+# rounded card around the ring, the date above it, welcome + lock time under the ring
+render_everforest() {   # render_everforest <out.png> <width px> <height px> <scale>
+	local out="$1" w="$2" h="$3" s="$4"
+	px() { LC_ALL=C awk -v v="$1" -v s="$s" 'BEGIN { printf "%d", v * s + 0.5 }'; }
+
+	local cx=$((w / 2)) cy=$((h / 2)) cw ch r top left
+	cw=$(px 420); ch=$(px 400); r=$(px 24)
+	left=$((cx - cw / 2)); top=$((cy - $(px 150)))
+
+	# blurred photo : slow (~1.5 s per output), cached per output size + wallpaper
+	local bgsrc=("xc:$bg") blurred="$HOME/.cache/neobrutal-lock/swaylock-${w}x$h-${photo##*/}"
+	if [[ -f "$photo" ]]; then
+		mkdir -p "${blurred%/*}"
+		[[ -f "$blurred" ]] || "$im" "$photo" -resize "${w}x${h}^" -gravity center -extent "${w}x${h}" -blur "0x$(px 12)" -modulate 85 "$blurred"
+		bgsrc=("$blurred")
+	fi
+
+	local avatar_args=() d=$(px $((2 * RADIUS - THICK)))
+	[[ -f "$AVATAR" ]] && avatar_args=(
+		\( "$AVATAR" -resize "${d}x${d}^" -gravity center -extent "${d}x${d}"
+		\( -size "${d}x${d}" xc:black -fill white -draw "circle $((d / 2)),$((d / 2)) $((d / 2)),0" \)
+		-alpha off -compose CopyOpacity -composite \)
+		-compose Over -gravity NorthWest -geometry "+$((cx - d / 2))+$((cy - d / 2))" -composite)
+
+	"$im" -size "${w}x${h}" "${bgsrc[@]}" -resize "${w}x${h}!" \
+		-fill "${bg}8C" -stroke "$border" -strokewidth "$(px 1)" \
+		-draw "roundrectangle $left,$top $((left + cw)),$((top + ch)) $r,$r" \
+		-stroke none -gravity Center \
+		${font_light:+-font "$font_light"} -fill "$fg" -pointsize "$(px 34)" \
+		-annotate "+0+$(px -215)" "$(LC_ALL=C date '+%A, %B %-d')" \
+		${font:+-font "$font"} -pointsize "$(px 16)" \
+		-annotate "+0+$(px 125)" "welcome back, $USER" \
+		-fill "$muted" -pointsize "$(px 13)" \
+		-annotate "+0+$(px 165)" "󰥔  locked at $since" \
+		"${avatar_args[@]}" \
+		"$out"
+}
+
+theme="$(c theme neobrutal)"
+photo="$(c wallpaper '')"; [[ "$(c wallpaper_mode tile)" == fill ]] || photo=""
+font_light="$(fc-match -f '%{file}' 'JetBrainsMono Nerd Font:light' 2>/dev/null)"
+txt="$ink"   # text in the ring : on the main color (neobrutal) or on the photo (everforest)
+if [[ "$theme" == everforest ]]; then
+	RADIUS=70; THICK=6; txt="$fg"
+fi
+
 args=()
 while read -r name w h s; do
 	[[ -n "$name" ]] || continue
-	render "$CACHE/$name.png" "$w" "$h" "$s" && args+=(--image "$name:$CACHE/$name.png")
+	if [[ "$theme" == everforest ]]; then
+		render_everforest "$CACHE/$name.png" "$w" "$h" "$s"
+	else
+		render "$CACHE/$name.png" "$w" "$h" "$s"
+	fi && args+=(--image "$name:$CACHE/$name.png")
 done < <(swaymsg -t get_outputs 2>/dev/null | jq -r '.[] | select(.active) | "\(.name) \(.current_mode.width) \(.current_mode.height) \(.scale)"')
 
 # ---- lock ------------------------------------------------------------------
@@ -93,5 +145,5 @@ exec swaylock -f \
 	--line-uses-ring --separator-color "$(n "$border")" \
 	--key-hl-color "$(n "$hl")" --bs-hl-color "$(n "$red")" \
 	--caps-lock-key-hl-color "$(n "$hl")" --caps-lock-bs-hl-color "$(n "$red")" \
-	--text-color "$(n "$ink")" --text-ver-color "$(n "$ink")" --text-wrong-color "$(n "$ink")" \
+	--text-color "$(n "$txt")" --text-ver-color "$(n "$ink")" --text-wrong-color "$(n "$ink")" \
 	--text-clear-color "$(n "$fg")" --text-caps-lock-color "$(n "$ink")"

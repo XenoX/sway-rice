@@ -17,6 +17,7 @@ Item {
         y: Theme.shadowOff
         width: face.width
         height: face.height
+        radius: Theme.radius
         color: Theme.shadow
     }
 
@@ -25,6 +26,7 @@ Item {
         width: parent.width - Theme.shadowOff
         height: parent.height - Theme.shadowOff
         color: card.fill
+        radius: Theme.radius
         border.width: Theme.bw
         border.color: Theme.border
 

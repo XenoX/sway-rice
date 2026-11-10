@@ -1,0 +1,65 @@
+/** ********** Everforest : overrides neobrutal.css (copied to shape.css by theme/neobrutal.sh) ********** **/
+/* soft shapes : thin borders, rounded chips, no hard shadows */
+
+* {
+	font-weight: 600;
+}
+
+window#waybar {
+	border-bottom: 1px solid @surface;
+}
+
+tooltip,
+menu {
+	border: 1px solid @border;
+	border-radius: 8px;
+}
+
+#mode,
+#window,
+#custom-player,
+#custom-spotify,
+#custom-theme,
+#custom-jira,
+#custom-todo,
+#idle_inhibitor,
+#bluetooth,
+#pulseaudio,
+#backlight,
+#network,
+#battery,
+#clock,
+#tray {
+	border: none;
+	border-radius: 8px;
+	box-shadow: none;
+	margin: 6px 3px;
+}
+
+#custom-player:hover,
+#custom-theme:hover,
+#custom-jira:hover,
+#custom-todo:hover,
+#idle_inhibitor:hover,
+#bluetooth:hover,
+#pulseaudio:hover,
+#backlight:hover,
+#network:hover,
+#battery:hover,
+#clock:hover {
+	box-shadow: inset 0px 0px 0px 2px alpha(@fg, 0.35);
+}
+
+#workspaces {
+	margin: 6px 3px;
+}
+
+#workspaces button {
+	border: none;
+	border-radius: 8px;
+	box-shadow: none;
+}
+
+#workspaces button:hover {
+	box-shadow: inset 0px 0px 0px 2px alpha(@fg, 0.35);
+}

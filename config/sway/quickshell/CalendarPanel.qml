@@ -67,6 +67,7 @@ Card {
             width: 84
             height: 84
             color: Theme.main
+            radius: Theme.radius
             border.width: Theme.bw
             border.color: Theme.border
 
@@ -77,14 +78,14 @@ Card {
                     text: panel.today.getDate()
                     color: Theme.ink
                     font.pixelSize: 38
-                    font.weight: Font.Black
+                    font.weight: Theme.heavy
                 }
                 BText {
                     anchors.horizontalCenter: parent.horizontalCenter
                     text: panel.monthShort[panel.today.getMonth()]
                     color: Theme.ink
                     font.pixelSize: 11
-                    font.weight: Font.Black
+                    font.weight: Theme.heavy
                 }
             }
         }
@@ -100,7 +101,7 @@ Card {
                 width: parent.width
                 text: panel.dayNames[panel.today.getDay()].toUpperCase()
                 font.pixelSize: 22
-                font.weight: Font.Black
+                font.weight: Theme.heavy
             }
             BText {
                 width: parent.width
@@ -133,7 +134,7 @@ Card {
             horizontalAlignment: Text.AlignHCenter
             text: `${panel.cap(panel.monthNames[panel.viewMonth])} ${panel.viewYear}`.toUpperCase()
             font.pixelSize: 15
-            font.weight: Font.Black
+            font.weight: Theme.heavy
         }
         BButton {
             id: todayBtn
@@ -164,6 +165,7 @@ Card {
         width: parent.width
         implicitHeight: 2 * Theme.bw + 28 + 6 * rowH
         color: Theme.surface
+        radius: Theme.radius
         border.width: Theme.bw
         border.color: Theme.border
 
@@ -184,7 +186,7 @@ Card {
                         text: "WK"
                         color: Theme.dark ? Theme.fg : Theme.surface
                         font.pixelSize: 10
-                        font.weight: Font.Black
+                        font.weight: Theme.heavy
                     }
                 }
                 Repeater {
@@ -202,7 +204,7 @@ Card {
                             text: modelData
                             color: Theme.ink
                             font.pixelSize: 10
-                            font.weight: Font.Black
+                            font.weight: Theme.heavy
                         }
                     }
                 }
@@ -261,6 +263,7 @@ Card {
                                 width: 30
                                 height: 26
                                 color: dayCell.isToday ? Theme.main : dayCell.isSelected ? Theme.cyan : cellMa.containsMouse ? Theme.bg : "transparent"
+                                radius: Theme.radius
                                 border.width: dayCell.isToday || dayCell.isSelected ? Theme.bwSmall : 0
                                 border.color: Theme.border
 
@@ -299,6 +302,7 @@ Card {
         width: parent.width
         implicitHeight: 40
         color: panel.sameDay(panel.selected, panel.today) ? Theme.bg : Theme.cyan
+        radius: Theme.radius
         border.width: Theme.bwSmall
         border.color: Theme.border
 
@@ -319,6 +323,7 @@ Card {
         width: tagText.implicitWidth + 14
         height: 24
         color: fill
+        radius: Theme.radius
         border.width: Theme.bwSmall
         border.color: Theme.border
         BText {
@@ -326,7 +331,7 @@ Card {
             anchors.centerIn: parent
             color: Theme.ink
             font.pixelSize: 11
-            font.weight: Font.Black
+            font.weight: Theme.heavy
         }
     }
 }

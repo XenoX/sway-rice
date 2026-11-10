@@ -28,6 +28,7 @@ Item {
         y: btn.off
         width: parent.width - btn.off
         height: parent.height - btn.off
+        radius: Theme.radius
         color: Theme.shadow
     }
 
@@ -37,6 +38,7 @@ Item {
         width: parent.width - btn.off
         height: parent.height - btn.off
         color: btn.face
+        radius: Theme.radius
         border.width: Theme.bwSmall
         border.color: Theme.border
 
@@ -56,7 +58,7 @@ Item {
                 text: btn.text
                 color: Theme.onFill(btn.face)
                 font.pixelSize: btn.fontSize
-                font.weight: Font.ExtraBold
+                font.weight: Theme.heavy
             }
         }
     }

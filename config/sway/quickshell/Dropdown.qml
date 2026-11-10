@@ -46,6 +46,7 @@ Column {
         width: dd.width - Theme.pressOff
         height: list.implicitHeight + 2 * Theme.bwSmall
         color: Theme.surface
+        radius: Theme.radius
         border.width: Theme.bwSmall
         border.color: Theme.border
 

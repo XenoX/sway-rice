@@ -21,7 +21,7 @@ Item {
             text: sec.text.toUpperCase()
             color: Theme.dark ? Theme.fg : Theme.surface
             font.pixelSize: 10
-            font.weight: Font.Black
+            font.weight: Theme.heavy
             font.letterSpacing: 1
         }
     }

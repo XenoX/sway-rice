@@ -1,0 +1,28 @@
+# Everforest cursor colors (Simp1e color scheme format), soft shadow (no offset).
+# build.sh makes one theme per accent : @NAME@ and @ACCENT@ are filled in from the palette.
+
+name:Everforest-Cursors-@NAME@
+shadow:000000
+shadow_opacity:0.35
+cursor_border:2D353B
+default_cursor_bg:@ACCENT@
+hand_bg:@ACCENT@
+question_mark_bg:7FBBB3
+question_mark_fg:2D353B
+plus_bg:A7C080
+plus_fg:2D353B
+link_bg:7FBBB3
+link_fg:2D353B
+move_bg:@ACCENT@
+move_fg:2D353B
+context_menu_bg:D3C6AA
+context_menu_fg:2D353B
+forbidden_bg:E67E80
+forbidden_fg:2D353B
+magnifier_bg:D3C6AA
+magnifier_fg:2D353B
+skull_bg:D3C6AA
+skull_eye:2D353B
+spinner_bg:D3C6AA
+spinner_fg1:E67E80
+spinner_fg2:7FBBB3

@@ -27,6 +27,7 @@ Item {
         anchors.fill: parent
         anchors.rightMargin: Theme.pressOff
         color: row.face
+        radius: Theme.radius
         border.width: Theme.bwSmall
         border.color: Theme.border
     }

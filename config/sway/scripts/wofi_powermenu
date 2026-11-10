@@ -11,7 +11,7 @@ WOFI_DIR="$HOME/.config/sway/wofi"
 ## wofi loads the stylesheet as raw data, so a relative @import is resolved
 ## against the current directory and fails. Inline the palette instead.
 STYLE="${XDG_RUNTIME_DIR:-/tmp}/wofi-neobrutal.css"
-{ cat "$WOFI_DIR/colors.css"; grep -v '^@import' "$WOFI_DIR/style.css"; } > "$STYLE"
+{ cat "$WOFI_DIR/colors.css"; grep -v '^@import' "$WOFI_DIR/style.css"; cat "$WOFI_DIR/shape.css" 2>/dev/null; } > "$STYLE"
 
 ## Wofi Command
 wofi_command="wofi --show dmenu \

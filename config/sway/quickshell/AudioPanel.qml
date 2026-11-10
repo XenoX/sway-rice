@@ -107,7 +107,7 @@ Card {
             horizontalAlignment: Text.AlignRight
             text: vr.muted ? "OFF" : Math.round(vr.volume * 100) + "%"
             font.pixelSize: 14
-            font.weight: Font.Black
+            font.weight: Theme.heavy
         }
     }
 }

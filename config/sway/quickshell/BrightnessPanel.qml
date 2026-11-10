@@ -35,7 +35,7 @@ Card {
         BText {
             text: panel.ready ? Math.round(panel.value * 100) + "%" : "…"
             font.pixelSize: 26
-            font.weight: Font.Black
+            font.weight: Theme.heavy
         }
     }
 
