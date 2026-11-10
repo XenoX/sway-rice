@@ -102,7 +102,8 @@ bindsym Print                   exec "$screenshot --now"
 bindsym $alt+Print              exec "$screenshot --in5"
 bindsym Shift+Print             exec "$screenshot --in10"
 bindsym Control+Print           exec "$screenshot --win"
-bindsym Control+F9              exec flameshot gui
+# XWayland: a native Wayland window cannot span all outputs on sway
+bindsym Control+F9              exec env QT_QPA_PLATFORM=xcb flameshot gui
 bindsym $mod+Shift+A            exec "$screenshot --area"
 
 # -- Lockscreen --

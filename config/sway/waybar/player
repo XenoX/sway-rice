@@ -7,6 +7,14 @@ PLAY=$'\U000F040A'    # nf-md-play
 PAUSE=$'\U000F03E4'   # nf-md-pause
 NOTE=$'\U000F075A'    # nf-md-music_note
 
+# %any takes the first player even if Stopped (e.g. an idle Chromium tab): prefer Playing, then Paused
+active="$(playerctl -a metadata -f '{{status}} {{playerInstance}}' 2>/dev/null |
+	awk '$1=="Playing" && !p {p=$2} $1=="Paused" && !q {q=$2} END {print p ? p : q}')"
+PLAYERS="${active:-$PLAYERS}"
+
+# "player <cmd>" forwards to playerctl on the same player the module shows (used by on-click)
+[ $# -gt 0 ] && exec playerctl --player="$PLAYERS" "$@"
+
 status="$(playerctl --player="$PLAYERS" status 2>/dev/null)"
 track="$(playerctl --player="$PLAYERS" metadata --format '{{ artist }} - {{ title }}' 2>/dev/null)"
 track="${track#' - '}"
