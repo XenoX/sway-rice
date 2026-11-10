@@ -5,6 +5,7 @@
 # UI
 bg='#FDF6E3'        # bg0
 grid='#E6E2CC'      # bg3 (wallpaper dots)
+pride=             # wallpaper : rainbow stripes instead of the photo / dots (empty = off)
 surface='#F4F0D9'   # bg1
 fg='#5C6A72'
 ink='#FDF6E3'       # text on colored chips
@@ -53,6 +54,6 @@ bw=2; bw_small=1; radius=8; shadow_off=0; press_off=0
 gaps_in=10; gaps_out=6; weight=600
 accents=(green yellow orange red purple blue cyan)
 
-# Wallpaper : fog_forest, recolored to Everforest by Apeiros (box.apeiros.xyz/public/everforest_walls),
+# Wallpaper : berries / flowers close-ups, recolored to Everforest by Apeiros (box.apeiros.xyz/public/everforest_walls),
 # downloaded once to wallpapers/ by theme/neobrutal.sh (the dot grid when offline)
-wallpaper_url='https://box.apeiros.xyz/public/everforest_walls/nature/fog_forest_1.png'
+wallpaper_url='https://box.apeiros.xyz/public/everforest_walls/close_up/flowers.png'

@@ -115,12 +115,21 @@ apply_wallpaper() {
 		(( v > 255 )) && v=255
 		dot+="$(printf '%02X' "$v")"
 	done
-	# one 2.5px dot centered in a 32px tile
-	"$im" -size 32x32 "xc:$bg" \
-		-fill "#$dot" -draw "circle 16,16 18.5,16" \
-		"$GRID"
+	if [[ -n "${pride:-}" ]]; then
+		# pride : 6 rainbow bands + black rules, sheared 45° (tile wraps, so seamless)
+		local args=() c
+		for c in "$red" "$orange" "$yellow" "$green" "$blue" "$purple"; do
+			args+=(-size 36x240 "xc:$c" -size 4x240 "xc:$border")
+		done
+		"$im" "${args[@]}" +append +repage -virtual-pixel tile -fx 'p{(i+j)%w,j}' "$GRID"
+	else
+		# one 2.5px dot centered in a 32px tile
+		"$im" -size 32x32 "xc:$bg" \
+			-fill "#$dot" -draw "circle 16,16 18.5,16" \
+			"$GRID"
+	fi
 
-	if [[ -n "${wallpaper_url:-}" ]]; then
+	if [[ -n "${wallpaper_url:-}" && -z "${pride:-}" ]]; then
 		# shortcut: cached by theme + mode ; after changing wallpaper_url, delete this file (and ~/.cache/neobrutal-lock/bg-*)
 		local photo="$WALL_DIR/$THEME-$MODE-photo.jpg"
 		if [[ ! -s "$photo" ]]; then

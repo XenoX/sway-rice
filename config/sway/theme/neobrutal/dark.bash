@@ -5,6 +5,7 @@
 # UI
 bg='#2A2B30'        # charcoal page (light enough for black shadows to read)
 grid='#34353B'      # wallpaper grid lines
+pride=             # wallpaper : rainbow stripes instead of the dot grid (empty = dot grid)
 surface='#3B3D44'   # neutral chips / cards
 fg='#FFF4E0'        # text on bg/surface
 ink='#000000'       # text on colored chips
