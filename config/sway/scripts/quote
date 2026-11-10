@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+## Random quote from quotes.txt as pango markup, for the hyprlock label
+## quote [author color] : quote in italics wrapped at 64 columns, author in bold color
+
+esc() { sed 's/&/\&amp;/g; s/</\&lt;/g; s/>/\&gt;/g'; }
+IFS='|' read -r q a < <(grep -v '^[[:space:]]*\(#\|$\)' "$HOME/.config/sway/quotes.txt" | shuf -n 1)
+[[ -n "$q" ]] || exit 0
+printf '<i>“%s”</i>\n<b><span foreground="%s">— %s</span></b>\n' \
+	"$(fold -s -w 64 <<< "$q" | sed 's/ *$//' | esc)" "${1:-#FFDC58}" "$(esc <<< "$a")"

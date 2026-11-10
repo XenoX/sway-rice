@@ -21,7 +21,7 @@ bg="$(c bg '#2A2B30')"; surface="$(c surface '#3B3D44')"; fg="$(c fg '#FFF4E0')"
 ink="$(c ink '#000000')"; border="$(c border '#000000')"; shadow="$(c shadow '#000000')"
 muted="$(c muted '#A09A8E')"; main="$(c main '#FFDC58')"
 red="$(c red '#FF6B6B')"; yellow="$(c yellow '#FFDC58')"; green="$(c green '#A3E636')"
-blue="$(c blue '#88AAEE')"; orange="$(c orange '#FF9F45')"
+blue="$(c blue '#88AAEE')"; orange="$(c orange '#FF9F45')"; cyan="$(c cyan '#5DD9E6')"
 
 im="magick"; command -v magick >/dev/null 2>&1 || im="convert"
 font="$(fc-match -f '%{file}' 'JetBrainsMono Nerd Font:bold' 2>/dev/null)"
@@ -31,6 +31,7 @@ since="$(LC_ALL=C date '+%H:%M')"
 # ring geometry (logical px, swaylock scales it with the output)
 RADIUS=78
 THICK=14
+AVATAR="${LOCK_AVATAR:-$HOME/.face}"
 
 # ---- one background per output -------------------------------------------
 # card layout around the ring center (cx, cy), in logical px :
@@ -41,10 +42,29 @@ render() {   # render <out.png> <width px> <height px> <scale>
 
 	local cx=$((w / 2)) cy=$((h / 2))
 	local cw ch top left bw sh bar
-	cw=$(px 440); ch=$(px 380); bw=$(px 4); sh=$(px 10); bar=$(px 52)
+	cw=$(px 440); ch=$(px 352); bw=$(px 4); sh=$(px 10); bar=$(px 52)
 	top=$((cy - $(px 176))); left=$((cx - cw / 2))
 	local right=$((left + cw)) bottom=$((top + ch))
 	local sq=$(px 14) gap=$(px 8)
+
+	# avatar in the ring hole (swaylock's idle inside is transparent)
+	local avatar_args=() d=$(px $((2 * RADIUS - THICK + 2)))
+	[[ -f "$AVATAR" ]] && avatar_args=(
+		\( "$AVATAR" -resize "${d}x${d}^" -gravity center -extent "${d}x${d}"
+		\( -size "${d}x${d}" xc:black -fill white -draw "circle $((d / 2)),$((d / 2)) $((d / 2)),0" \)
+		-alpha off -compose CopyOpacity -composite \)
+		-compose Over -gravity NorthWest -geometry "+$((cx - d / 2))+$((cy - d / 2))" -composite)
+
+	# two tags under the ring : lock time, password hint (bordered, hard shadow)
+	local chips=(-gravity Center -pointsize "$(px 13)" -strokewidth "$(px 2)") x=$((cx - $(px 120)))
+	local ty=$((cy + $(px 112))) th=$(px 30) cs=$(px 4) tw fill ink_ text
+	for tag in "$cyan|$ink|96|󰥔  $since" "$main|$ink|132|󰌆  PASSWORD"; do
+		IFS='|' read -r fill ink_ tw text <<< "$tag"; tw=$(px "$tw")
+		chips+=(-stroke none -fill "$shadow" -draw "rectangle $((x + cs)),$((ty + cs)) $((x + tw + cs)),$((ty + th + cs))"
+			-stroke "$border" -fill "$fill" -draw "rectangle $x,$ty $((x + tw)),$((ty + th))"
+			-stroke none -fill "$ink_" -annotate "$(printf '%+d%+d' $((x + tw / 2 - w / 2)) $((ty + th / 2 - h / 2)))" "$text")
+		x=$((x + tw + $(px 12)))
+	done
 
 	local bgsrc=("xc:$bg")
 	[[ -f "$wall" ]] && bgsrc=("tile:$wall")
@@ -62,10 +82,8 @@ render() {   # render <out.png> <width px> <height px> <scale>
 		${font:+-font "$font"} \
 		-fill "$ink" -pointsize "$(px 19)" -gravity NorthWest \
 		-annotate "+$((left + bw + $(px 16)))+$((top + bw + $(px 12)))" "󰌾  LOCKED" \
-		-fill "$fg" -pointsize "$(px 17)" -gravity North \
-		-annotate "+0+$((cy + $(px 112)))" "HELLO, ${USER^^}" \
-		-fill "$muted" -pointsize "$(px 13)" \
-		-annotate "+0+$((cy + $(px 142)))" "locked since $since  ·  type your password" \
+		"${chips[@]}" \
+		"${avatar_args[@]}" \
 		"$out"
 }
 
@@ -128,8 +146,8 @@ done < <(swaymsg -t get_outputs 2>/dev/null | jq -r '.[] | select(.active) | "\(
 
 # ---- lock ------------------------------------------------------------------
 n() { echo "${1#\#}"; }
-# key press segments on the black ring : light, so they don't merge with the inside
-hl="$fg"; [[ "$mode" == light ]] && hl="$surface"
+# idle inside : see-through so the avatar drawn in the background shows
+idle="$(n "$main")"; [[ -f "$AVATAR" ]] && idle=00000000
 exec swaylock -f \
 	"${args[@]}" --scaling center \
 	--color "$(n "$bg")" \
@@ -137,13 +155,15 @@ exec swaylock -f \
 	--indicator-caps-lock --indicator-idle-visible \
 	--indicator-radius "$RADIUS" --indicator-thickness "$THICK" \
 	--font 'JetBrainsMono Nerd Font' --font-size 18 \
-	--inside-color "$(n "$main")"           --ring-color "$(n "$border")" \
-	--inside-ver-color "$(n "$blue")"       --ring-ver-color "$(n "$border")" \
-	--inside-wrong-color "$(n "$red")"      --ring-wrong-color "$(n "$border")" \
-	--inside-clear-color "$(n "$surface")"  --ring-clear-color "$(n "$border")" \
-	--inside-caps-lock-color "$(n "$orange")" --ring-caps-lock-color "$(n "$border")" \
-	--line-uses-ring --separator-color "$(n "$border")" \
-	--key-hl-color "$(n "$hl")" --bs-hl-color "$(n "$red")" \
-	--caps-lock-key-hl-color "$(n "$hl")" --caps-lock-bs-hl-color "$(n "$red")" \
+	--inside-color "$idle"                  --ring-color "$(n "$main")" \
+	--inside-ver-color "$(n "$blue")"       --ring-ver-color "$(n "$blue")" \
+	--inside-wrong-color "$(n "$red")"      --ring-wrong-color "$(n "$red")" \
+	--inside-clear-color "$(n "$surface")"  --ring-clear-color "$(n "$green")" \
+	--inside-caps-lock-color "$(n "$orange")" --ring-caps-lock-color "$(n "$orange")" \
+	--line-color "$(n "$border")" --line-ver-color "$(n "$border")" --line-wrong-color "$(n "$border")" \
+	--line-clear-color "$(n "$border")" --line-caps-lock-color "$(n "$border")" \
+	--separator-color "$(n "$border")" \
+	--key-hl-color "$(n "$ink")" --bs-hl-color "$(n "$red")" \
+	--caps-lock-key-hl-color "$(n "$ink")" --caps-lock-bs-hl-color "$(n "$red")" \
 	--text-color "$(n "$txt")" --text-ver-color "$(n "$ink")" --text-wrong-color "$(n "$ink")" \
 	--text-clear-color "$(n "$fg")" --text-caps-lock-color "$(n "$ink")"

@@ -19,6 +19,9 @@ hyprlock_backgrounds() {
 	im="magick"; command -v magick >/dev/null 2>&1 || im="convert"
 	mkdir -p "$cache"
 
+	# hyprlock rounds the avatar as is : a square copy, so it's a circle like its shadow
+	[[ -f "$HOME/.face" ]] && "$im" "$HOME/.face" -gravity center -extent "%[fx:min(w,h)]x%[fx:min(w,h)]" "$cache/avatar.png"
+
 	{
 		# flat color first : outputs plugged in later, or a missing wallpaper
 		printf 'background {\n    monitor =\n    zindex = -2\n    color = rgba(%d, %d, %d, 1.0)\n}\n' "0x${bg:1:2}" "0x${bg:3:2}" "0x${bg:5:2}"
