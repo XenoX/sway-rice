@@ -101,7 +101,11 @@ Card {
         fill: Theme.cyan
         active: panel.adapter?.discovering ?? false
         activeFill: Theme.yellow
-        onClicked: panel.adapter.discovering = !panel.adapter.discovering
+        onClicked: {
+            // devices like Logitech mice start pairing themselves: the adapter must accept it
+            if (!panel.adapter.discovering) panel.adapter.pairable = true;
+            panel.adapter.discovering = !panel.adapter.discovering;
+        }
     }
 
     BText {
@@ -123,6 +127,7 @@ Card {
                 title: panel.deviceLabel(modelData)
                 subtitle: panel.deviceStatus(modelData)
                 onClicked: {
+                    panel.adapter.pairable = true;
                     modelData.trusted = true;
                     modelData.pair();
                 }

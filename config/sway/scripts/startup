@@ -22,6 +22,9 @@ else
   done
 fi
 
+# Bluetooth pairing agent (quickshell has none; without it BlueZ rejects pairing)
+pidof -x blueman-applet >/dev/null || blueman-applet &
+
 # Lauch notification daemon (mako)
 ~/.config/sway/scripts/notifications &
 
