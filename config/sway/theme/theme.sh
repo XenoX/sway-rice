@@ -1,16 +1,16 @@
 #!/usr/bin/env bash
 
-## Theme switcher (Neo Brutalism | Everforest) for sway / waybar / mako / wofi / rofi / terminals…
+## Theme switcher (Neo Brutalism | Everforest | Cyberpunk) for sway / waybar / mako / wofi / rofi / terminals…
 ##
 ## Usage: theme.sh light | dark | toggle | apply | status
-##        theme.sh theme neobrutal|everforest
+##        theme.sh theme neobrutal|everforest|cyberpunk
 ##        theme.sh accent <color>|default   (colors : accents=() of the palette)
 ##        theme.sh cursor-size 24|32|48|72|default
 ##        theme.sh zoom 80|90|100|110|120|default
 
 DIR="$HOME/.config/sway"
 THEME_FILE="$DIR/theme/.theme"
-THEMES=(neobrutal everforest)   # one dir of palettes each : theme/<name>/{light,dark}.bash
+THEMES=(neobrutal everforest cyberpunk)   # one dir of palettes each : theme/<name>/{light,dark}.bash
 STATE_FILE="$DIR/theme/.neobrutal_mode"
 CURSOR_SIZE_FILE="$DIR/theme/.neobrutal_cursor_size"
 CURSOR_SIZES=(24 32 48 72)   # the sizes theme/cursor/build.sh renders
@@ -122,6 +122,10 @@ apply_wallpaper() {
 			args+=(-size 36x240 "xc:$c" -size 4x240 "xc:$border")
 		done
 		"$im" "${args[@]}" +append +repage -virtual-pixel tile -fx 'p{(i+j)%w,j}' "$GRID"
+	elif [[ -n "${neon_grid:-}" ]]; then
+		# neon grid : a 1px line on the right and bottom edges of a 48px tile
+		"$im" -size 48x48 "xc:$bg" -fill "$grid" \
+			-draw "rectangle 47,0 47,47" -draw "rectangle 0,47 47,47" "$GRID"
 	else
 		# one 2.5px dot centered in a 32px tile
 		"$im" -size 32x32 "xc:$bg" \

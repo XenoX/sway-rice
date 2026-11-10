@@ -4,7 +4,7 @@ import Quickshell
 import Quickshell.Io
 import QtQuick
 
-// Theme palette + shapes (neobrutal | everforest), live-reloaded from colors.json (written by theme/theme.sh)
+// Theme palette + shapes (neobrutal | everforest | cyberpunk), live-reloaded from colors.json (written by theme/theme.sh)
 Singleton {
     id: theme
 

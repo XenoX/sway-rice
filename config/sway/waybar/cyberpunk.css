@@ -1,0 +1,15 @@
+/** ********** Cyberpunk : overrides neobrutal.css (copied to shape.css by theme/theme.sh) ********** **/
+/* same sharp chips (border @border = cyan, offset shadow @shadow = red "glitch"), thinner rules */
+
+* {
+	font-weight: 700;
+}
+
+window#waybar {
+	border-bottom: 2px solid @border;
+}
+
+tooltip,
+menu {
+	border: 2px solid @border;
+}

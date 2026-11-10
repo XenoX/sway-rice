@@ -1,7 +1,7 @@
 import QtQuick
 import Quickshell
 
-// Theme (neobrutal | everforest) + light/dark mode + main color (sway borders, bar, menus, cursor, login screen)
+// Theme (neobrutal | everforest | cyberpunk) + light/dark mode + main color (sway borders, bar, menus, cursor, login screen)
 Card {
     id: panel
 
@@ -18,8 +18,8 @@ Card {
     property string pendingAccent: ""
     property int pendingSize: 0
     property int pendingZoom: 0
-    readonly property var themes: Theme.c.themes ?? ["neobrutal", "everforest"]
-    readonly property var themeLabels: ({ neobrutal: "Neo Brutal", everforest: "Everforest" })
+    readonly property var themes: Theme.c.themes ?? ["neobrutal", "everforest", "cyberpunk"]
+    readonly property var themeLabels: ({ neobrutal: "Neo Brutal", everforest: "Everforest", cyberpunk: "Cyberpunk" })
     readonly property string themeName: pendingTheme !== "" ? pendingTheme : (Theme.c.theme ?? "neobrutal")
     readonly property bool dark: pendingMode !== "" ? pendingMode === "dark" : Theme.dark
     readonly property string accentName: pendingAccent !== "" ? pendingAccent : (Theme.c.accent_name ?? "yellow")
@@ -89,7 +89,7 @@ Card {
             BButton {
                 required property string modelData
                 width: (themeRow.width - (panel.themes.length - 1) * themeRow.spacing) / panel.themes.length
-                icon: modelData === "everforest" ? "󰐅" : "󰝤"
+                icon: ({ everforest: "󰐅", cyberpunk: "󰚩" })[modelData] ?? "󰝤"
                 text: panel.themeLabels[modelData] ?? modelData
                 active: modelData === panel.themeName
                 onClicked: panel.setTheme(modelData)
