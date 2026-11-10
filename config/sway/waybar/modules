@@ -87,7 +87,7 @@
         "tooltip": false,
         "escape": false,
         "on-click": "$HOME/.config/sway/scripts/panel theme",
-        "on-click-right": "$HOME/.config/sway/theme/neobrutal.sh toggle",
+        "on-click-right": "$HOME/.config/sway/theme/theme.sh toggle",
     },
 
 	// waybar-spotify

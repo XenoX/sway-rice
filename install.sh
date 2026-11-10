@@ -259,8 +259,8 @@ build_cursor() {
 init_theme() {
 	step "Theme ($THEME_MODE)"
 	# outside of a sway session the live-reload calls just fail silently
-	"$TARGET/theme/neobrutal.sh" "$THEME_MODE" >/dev/null 2>&1 || true
-	[[ -f "$TARGET/sway-colors" ]] || die "theme generation failed (try : $TARGET/theme/neobrutal.sh $THEME_MODE)"
+	"$TARGET/theme/theme.sh" "$THEME_MODE" >/dev/null 2>&1 || true
+	[[ -f "$TARGET/sway-colors" ]] || die "theme generation failed (try : $TARGET/theme/theme.sh $THEME_MODE)"
 	ok "colors generated for sway, waybar, mako, wofi, rofi, terminals, quickshell, chromium"
 }
 

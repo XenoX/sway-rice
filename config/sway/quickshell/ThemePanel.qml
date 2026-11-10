@@ -5,7 +5,7 @@ import Quickshell
 Card {
     id: panel
 
-    readonly property string ctl: Quickshell.env("HOME") + "/.config/sway/theme/neobrutal.sh"
+    readonly property string ctl: Quickshell.env("HOME") + "/.config/sway/theme/theme.sh"
     readonly property var accents: Theme.c.accents ?? ["yellow", "red", "blue", "green", "purple", "orange", "cyan", "pink"]
     readonly property var labels: ({
         yellow: "Yellow", red: "Red", blue: "Blue", green: "Green",
@@ -242,7 +242,7 @@ Card {
                 anchors.leftMargin: Theme.bw + 8
                 anchors.bottom: parent.bottom
                 anchors.bottomMargin: Theme.bw + 6
-                text: "$ neobrutal.sh accent " + (Theme.c.accent_name ?? "")
+                text: "$ theme.sh accent " + (Theme.c.accent_name ?? "")
                 color: Theme.fg
                 font.pixelSize: 11
             }

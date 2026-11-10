@@ -11,7 +11,7 @@ fallback() {
 		audio)      exec pavucontrol ;;
 		wifi)       exec nm-connection-editor ;;
 		brightness) exec "$HOME/.config/sway/scripts/brightness" --get ;;
-		theme)      exec "$HOME/.config/sway/theme/neobrutal.sh" toggle ;;
+		theme)      exec "$HOME/.config/sway/theme/theme.sh" toggle ;;
 		calendar)   notify-send "$(LC_ALL=C date '+%A, %B %d, %Y')" "$(LC_ALL=C cal -m | sed 's/_\x08//g')" ;;
 	esac
 }

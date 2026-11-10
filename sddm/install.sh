@@ -6,7 +6,7 @@
 #   sddm/install.sh --test         preview it in a window (sddm-greeter --test-mode), no root needed
 #
 # The palettes come from config/sway/theme/neobrutal/{light,dark}.bash.
-# theme.conf.user (owned by you) holds the light/dark mode : theme/neobrutal.sh keeps it in sync.
+# theme.conf.user (owned by you) holds the light/dark mode : theme/theme.sh keeps it in sync.
 
 set -euo pipefail
 
@@ -17,7 +17,7 @@ DEST="/usr/share/sddm/themes/neobrutal"
 CONF="/etc/sddm.conf.d/zz-neobrutal.conf"
 MODE_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/sway/theme/.neobrutal_mode"
 ICONS="${XDG_DATA_HOME:-$HOME/.local/share}/icons"
-THEME_SH="${XDG_CONFIG_HOME:-$HOME/.config}/sway/theme/neobrutal.sh"
+THEME_SH="${XDG_CONFIG_HOME:-$HOME/.config}/sway/theme/theme.sh"
 KEYS=(bg grid surface fg ink border shadow muted main accent yellow red blue green purple orange cyan pink)
 
 mode="$(cat "$MODE_FILE" 2>/dev/null || true)"
@@ -66,7 +66,7 @@ sudo install -m 644 "$tmp/neobrutal/"{Main.qml,metadata.desktop,theme.conf} "$DE
 sudo install -m 644 -o "$USER" "$tmp/neobrutal/theme.conf.user" "$DEST/"
 
 # cursor : the greeter can't read ~/.local/share/icons, copy the variants system-wide.
-# "Neobrutal" is a pointer (index.theme only) owned by you : theme/neobrutal.sh
+# "Neobrutal" is a pointer (index.theme only) owned by you : theme/theme.sh
 # points it at the current accent, like theme.conf.user for the mode.
 cursor_conf=""
 variants=("$ICONS"/Neobrutal-*/)

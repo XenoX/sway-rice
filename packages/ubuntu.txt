@@ -76,6 +76,6 @@ unzip
 fontconfig
 ca-certificates
 
-# --- Everforest GTK theme build (theme/neobrutal.sh everforest) ---
+# --- Everforest GTK theme build (theme/theme.sh everforest) ---
 sassc
 gtk2-engines-murrine

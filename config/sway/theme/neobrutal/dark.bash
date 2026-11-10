@@ -44,11 +44,11 @@ color7='#E6DDCB'; color15='#FFFFFF'
 gtk_theme='Manhattan'
 gtk_icons='Luv-Folders-Dark'
 gtk_scheme='prefer-dark'
-# cursor_theme is <cursor_prefix>-<Accent> (theme/cursor/build.sh), set by theme/neobrutal.sh
+# cursor_theme is <cursor_prefix>-<Accent> (theme/cursor/build.sh), set by theme/theme.sh
 cursor_prefix='Neobrutal'
 cursor_size=24
 
-# Shape (read by theme/neobrutal.sh : sway, mako, quickshell, hyprlock…)
+# Shape (read by theme/theme.sh : sway, mako, quickshell, hyprlock…)
 bw=3; bw_small=2; radius=0; shadow_off=6; press_off=3
 gaps_in=20; gaps_out=8; weight=800
 accents=(yellow red blue green purple orange cyan pink)

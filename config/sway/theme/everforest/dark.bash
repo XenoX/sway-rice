@@ -45,7 +45,7 @@ color7='#D3C6AA'; color15='#D3C6AA'
 gtk_theme='Everforest-Green-Dark'
 gtk_icons='Everforest-Dark'
 gtk_scheme='prefer-dark'
-# cursor_theme is <cursor_prefix>-<Accent> (theme/cursor/build.sh), set by theme/neobrutal.sh
+# cursor_theme is <cursor_prefix>-<Accent> (theme/cursor/build.sh), set by theme/theme.sh
 cursor_prefix='Everforest-Cursors'
 cursor_size=24
 
@@ -55,5 +55,5 @@ gaps_in=10; gaps_out=6; weight=600
 accents=(green yellow orange red purple blue cyan)
 
 # Wallpaper : berries / flowers close-ups, recolored to Everforest by Apeiros (box.apeiros.xyz/public/everforest_walls),
-# downloaded once to wallpapers/ by theme/neobrutal.sh (the dot grid when offline)
+# downloaded once to wallpapers/ by theme/theme.sh (the dot grid when offline)
 wallpaper_url='https://box.apeiros.xyz/public/everforest_walls/close_up/berries.png'

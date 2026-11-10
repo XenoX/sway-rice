@@ -6,7 +6,7 @@
 ## time, one per output. Neobrutal : the dot grid wallpaper + a card (black border,
 ## hard shadow, LOCKED title bar) with the ring sitting in it. Everforest : the
 ## blurred wallpaper photo + a translucent rounded card (render_everforest).
-## Colors come from quickshell/colors.json (theme/neobrutal.sh), so the main
+## Colors come from quickshell/colors.json (theme/theme.sh), so the main
 ## color picked in the theme panel applies here too.
 
 DIR="$HOME/.config/sway"

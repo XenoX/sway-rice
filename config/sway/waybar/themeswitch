@@ -3,8 +3,8 @@
 ## Waybar module : neo brutalism theme icon (click : theme panel, right click : light/dark)
 
 DIR="$HOME/.config/sway"
-MODE="$("$DIR"/theme/neobrutal.sh status)"
-THEME="$("$DIR"/theme/neobrutal.sh theme)"
+MODE="$("$DIR"/theme/theme.sh status)"
+THEME="$("$DIR"/theme/theme.sh theme)"
 source "$DIR/theme/$THEME/$MODE.bash"
 
 SUN=$'\U000F05A8'   # nf-md-white_balance_sunny

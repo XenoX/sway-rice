@@ -74,10 +74,10 @@ Without Quickshell, waybar clicks open `blueman-manager`, `pavucontrol` and `nm-
 The theme from the command line:
 
 ```sh
-~/.config/sway/theme/neobrutal.sh light|dark|toggle|apply|status
-~/.config/sway/theme/neobrutal.sh accent yellow|red|blue|green|purple|orange|cyan|pink|default
-~/.config/sway/theme/neobrutal.sh cursor-size 24|32|48|72|default
-~/.config/sway/theme/neobrutal.sh zoom 80|90|100|110|120|default
+~/.config/sway/theme/theme.sh light|dark|toggle|apply|status
+~/.config/sway/theme/theme.sh accent yellow|red|blue|green|purple|orange|cyan|pink|default
+~/.config/sway/theme/theme.sh cursor-size 24|32|48|72|default
+~/.config/sway/theme/theme.sh zoom 80|90|100|110|120|default
 ```
 
 The main color is used for the sway borders, the bar, the menus, the cursor and the login screen. `default` goes back to the palette colors.
@@ -93,7 +93,7 @@ The zoom is the sway output scale, applied to every screen. The `output … pos`
 The palettes live in `config/sway/theme/neobrutal/{light,dark}.bash`. After editing them:
 
 ```sh
-~/.config/sway/theme/neobrutal.sh apply
+~/.config/sway/theme/theme.sh apply
 ```
 
 The color files (`sway-colors`, `waybar/colors.css`, `mako/colors`, `quickshell/colors.json`…) are **generated** and ignored by git, so switching themes doesn't touch the repo.
@@ -124,7 +124,7 @@ install.sh                  Arch / Ubuntu installer
 packages/                   package lists
 config/sway/
 ├── config, sway-*          sway
-├── theme/neobrutal.sh      theme generator (light/dark, main color, cursor, zoom)
+├── theme/theme.sh      theme generator (light/dark, main color, cursor, zoom)
 ├── theme/cursor/           Neobrutal cursors (built from Simp1e)
 ├── theme/neobrutal/        palettes
 ├── waybar/                 bar + module scripts

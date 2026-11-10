@@ -3,7 +3,7 @@
 # Cursor themes : Simp1e recolored with each theme's palette.
 #   Neobrutal-<Accent>          : hard offset black shadow instead of the soft 35% one
 #   Everforest-Cursors-<Accent> : Everforest colors, Simp1e's soft shadow
-# One theme per accent color, so that theme/neobrutal.sh can switch the accent
+# One theme per accent color, so that theme/theme.sh can switch the accent
 # without rebuilding anything.
 #
 #   theme/cursor/build.sh            build and install to ~/.local/share/icons/
@@ -18,7 +18,7 @@ HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ICONS="${XDG_DATA_HOME:-$HOME/.local/share}/icons"
 SIMP1E_REPO="https://gitlab.com/cursors/simp1e.git"
 SIMP1E_REF="f8f8f3c09dd0aa31cc9bc5499c683aad025984be"
-# rendered sizes : keep in sync with CURSOR_SIZES in theme/neobrutal.sh
+# rendered sizes : keep in sync with CURSOR_SIZES in theme/theme.sh
 SIZES=24,32,48,72
 
 tmp="$(mktemp -d)"; trap 'rm -rf "$tmp"' EXIT
@@ -66,5 +66,5 @@ build_theme() {
 build_theme neobrutal Neobrutal 1.5        # hard offset black shadow
 build_theme everforest Everforest-Cursors 0   # Simp1e's soft shadow
 
-# leftover of the single-theme build (now a pointer written by theme/neobrutal.sh)
+# leftover of the single-theme build (now a pointer written by theme/theme.sh)
 [[ -d "$ICONS/Neobrutal/cursors" ]] && rm -rf "${ICONS:?}/Neobrutal"
