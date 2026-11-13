@@ -119,7 +119,7 @@ apply_wallpaper() {
 		# pride : 6 rainbow bands + black rules, sheared 45° (tile wraps, so seamless)
 		local args=() c
 		for c in "$red" "$orange" "$yellow" "$green" "$blue" "$purple"; do
-			args+=(-size 36x240 "xc:$c" -size 4x240 "xc:$border")
+			args+=(-size 96x600 "xc:$c" -size 4x600 "xc:$border")   # tile height = width (6×100) so it stays seamless
 		done
 		"$im" "${args[@]}" +append +repage -virtual-pixel tile -fx 'p{(i+j)%w,j}' "$GRID"
 	elif [[ -n "${neon_grid:-}" ]]; then
