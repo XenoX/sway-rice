@@ -1,4 +1,4 @@
-# Neo Brutalism · sway dotfiles
+# Sway dotfiles
 
 A complete sway setup in the **neo-brutalism** style (thick black borders, hard shadows with no blur, flat saturated colors), with a **light** and a **dark** theme, a choice of main color and a system-wide zoom.
 
